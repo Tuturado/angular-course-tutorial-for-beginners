@@ -1,4 +1,5 @@
 <div style="text-align: center">
   <h1>Component App</h1>
+  {{message}}
 </div>
-<app-test></app-test>
+<app-test (childEvent)="message=$event" [parentData]="name"></app-test>
