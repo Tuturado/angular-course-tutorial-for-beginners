@@ -2,6 +2,11 @@
   <h1>Component App</h1>
   {{message}}
 </div>
+<nav>
+  <a routerLink="/departments" routerLinkActive="active">Departments</a>
+  <a routerLink="/employees" routerLinkActive="active">Employees</a>
+</nav>
 <!--<app-test (childEvent)="message=$event" [parentData]="name"></app-test>-->
-<app-employee-list></app-employee-list>
-<app-employee-detail></app-employee-detail>
+<!--<app-employee-list></app-employee-list>-->
+<!--<app-employee-detail></app-employee-detail>-->
+<router-outlet></router-outlet>

@@ -1,3 +1,4 @@
-# AngularCourse
+# Angular Course
 
-Deixei os códigos de cada aula do curso tutorial for beginners comentados conforme fui passando as aulas, parei na aula 21.
+Finalizado a primeira parte do curso Angular for beginners que vai até a aula 32, já estou iniciando a parte de Angular Forms.
+Todos os códigos econtram-se atualizados.
