@@ -5,7 +5,7 @@ import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TestComponent } from './test/test.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { EmployeeDetailComponent } from './employee-detail/employee-detail.component';
 import { EmployeeService } from './employee.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -28,7 +28,7 @@ import { DepartmentContactComponent } from './department-contact/department-cont
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClient
   ],
   providers: [EmployeeService],
   bootstrap: [AppComponent]

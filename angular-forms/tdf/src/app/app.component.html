@@ -1,50 +1,70 @@
 <div class="container-fluid">
   <h1>Forumulário de inscrição</h1>
-  <form #userForm="ngForm">
-
-    {{ userForm.value | json }}
+  <div class="alert alert-danger" *ngIf="errorMsg">
+    {{errorMsg}}
+  </div>
+  <form #userForm="ngForm" *ngIf="!submitted" (ngSubmit)="onSubmit(userForm)" novalidate>
 
     <div class="form-group">
       <label>Nome</label>
-      <input type="text" class="form-control" name="userName" ngModel>
+      <input type="text" required #name="ngModel" [class.is-invalid]="name.invalid && name.touched"
+        class="form-control is-invalid" name="userName" [(ngModel)]="userModel.name">
+      <small class="text-danger" [class.d-none]="name.valid || name.untouched">É necessário um nome</small>
     </div>
 
     <div class="form-group">
       <label>Email</label>
-      <input type="email" class="form-control" name="email" ngModel>
+      <input type="email" class="form-control"
+        pattern="/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i"
+        name="email" [(ngModel)]="userModel.email">
+      
     </div>
-
+    email
     <div class="form-group">
       <label>Telefone</label>
-      <input type="tel" class="form-control" name="phone" ngModel>
+      <input type="tel" #phone="ngModel" pattern="^\d{10}$" [class.is-invalid]="phone.invalid && phone.touched" required
+        class="form-control" name="phone" [(ngModel)]="userModel.phone">
+      <!-- Para uma validação única o método abaixo pode ser utilizada -->
+      <!--<small class="text-danger" [class.d-none]="phone.valid || phone.untouched">Número de telefone é obrigatório e precisa de 10 dígitos</small>-->
+
+      <!-- Para uma validação em blocos o exemplo abaixo é melhor -->
+      <div *ngIf="phone.errors && (phone.invalid || phone.touched)">
+        <small class="text-danger" *ngIf="phone.errors">É necessário digitar um número de telefone</small>
+        <small class="text-danger" *ngIf="phone.errors">É necessário que o número tenha 10 digitos</small>
+      </div>
     </div>
 
     <div class="form-group">
-      <select class="custom-select" name="topic" ngModel>
-        <option selected>Estou interessado em</option>
+      <select (blur)="validateTopic(topic.value)" (change)="validateTopic(topic.value)" #topic="ngModel"
+        [class.is-invalid]="topicHasError && topic.touched" class="custom-select" name="topic"
+        [(ngModel)]="userModel.topic">
+        <option value="default">Estou interessado em</option>
         <option *ngFor="let topic of topics">{{ topic }}</option>
       </select>
+      <p><small class="text-danger" [class.d-none]="!topicHasError || topic.untouched">Por favor escolha um
+          tópico</small></p>
     </div>
 
     <div class="mb-3">
       <label>Preferência de horário</label>
       <div class="form-check">
-        <input type="radio" ngModel name="timePreference" value="morning">
+        <input type="radio" [(ngModel)]="userModel.timePreference" name="timePreference" value="morning">
         <label>Manhã (9AM - 12PM</label>
       </div>
       <div class="form-check">
-        <input type="radio" ngModel name="timePreference" value="evening" id="">
+        <input type="radio" [(ngModel)]="userModel.timePreference" name="timePreference" value="evening" id="">
         <label class="form-check-label">Noite (5PM - 8PM</label>
       </div>
     </div>
 
     <div class="form-check mb-3">
-      <input type="checkbox" name="subscribe" ngModel class="form-check-input">
+      <input type="checkbox" name="subscribe" [(ngModel)]="userModel.subscribe" class="form-check-input">
       <label class="form-check-label">
         Me envie ofertas promocionais
       </label>
     </div>
 
+    <!-- Para dar disable no botão caso algum campo do form esteja incorreto: [disabled]="userForm.form.invalid || topicHasError" -->
     <button class="btn btn-primary" type="submit">Enviar formulário</button>
 
   </form>
